@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ジャパンマーベリックス株式会社 | コンサルティング・電気通信工事・セールスマーケティング</title>
+<meta name="description" content="ジャパンマーベリックス株式会社のコーポレートサイト。コンサルティング、電気通信工事業、電気工事業、セールスマーケティングを通じて、お客様の経営課題の解決に取り組みます。">
+<style>
+  /* ===== カラー・基本変数（ダークでモダンなトーン） ===== */
+  :root {
+    --bg: #05050a;
+    --card: rgba(16, 16, 26, 0.55);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #f0f0f5;
+    --muted: #8a8a9a;
+    --accent: #7c5cff;
+    --accent2: #00e5ff;
+    --accent3: #ff4d6e;
+    --max: 1080px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+
+  /* ===== 背景演出（グリッド + 動くグラデーション光） ===== */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 30%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .glow-1 { width: 520px; height: 520px; background: var(--accent);  top: -180px; left: -140px; animation: drift1 14s ease-in-out infinite; }
+  .glow-2 { width: 460px; height: 460px; background: var(--accent2); top: 30%; right: -160px; animation: drift2 16s ease-in-out infinite; }
+  .glow-3 { width: 380px; height: 380px; background: var(--accent3); bottom: -120px; left: 40%; opacity: 0.28; animation: drift3 20s ease-in-out infinite; }
+
+  @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,40px)} }
+  @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-50px,-30px)} }
+  @keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,50px)} }
+
+  /* ===== 共通レイアウト ===== */
+  .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  section { position: relative; z-index: 1; padding: 96px 0; }
+
+  /* セクション見出し */
+  .sec-label {
+    display: inline-block;
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .sec-title {
+    font-size: 34px; font-weight: 800; letter-spacing: -0.5px;
+    margin-bottom: 48px;
+    background: linear-gradient(120deg, #fff 30%, #b9a8ff 70%, #7fe9ff);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ===== ヘッダー / ナビ ===== */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    background: rgba(5, 5, 10, 0.6);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-size: 24px; font-weight: 800; letter-spacing: -0.3px;
+    color: var(--text); text-decoration: none;
+    display: flex; align-items: center; gap: 11px;
+  }
+  .logo .mark {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: conic-gradient(from 140deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #fff;
+    box-shadow: 0 6px 18px rgba(124,92,255,0.45);
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ハンバーガー（スマホ用） */
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; transition: 0.3s; }
+
+  /* ===== ヒーロー ===== */
+  .hero { padding: 120px 0 110px; text-align: center; }
+  .hero .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--muted); letter-spacing: 0.5px;
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 7px 16px; margin-bottom: 30px;
+    background: rgba(255,255,255,0.03);
+  }
+  .hero .badge .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #2dffb0;
+    box-shadow: 0 0 0 0 rgba(45,255,176,0.6); animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(45,255,176,0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(45,255,176,0); }
+    100% { box-shadow: 0 0 0 0 rgba(45,255,176,0); }
+  }
+  .hero h1 {
+    font-size: 56px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.2;
+    margin-bottom: 24px;
+    background: linear-gradient(120deg, #fff 25%, #b9a8ff 60%, #7fe9ff);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .hero p {
+    color: var(--muted); font-size: 17px; max-width: 620px; margin: 0 auto 40px;
+    animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+
+  /* ボタン共通 */
+  .btn {
+    display: inline-block; text-decoration: none; font-size: 15px; font-weight: 600;
+    padding: 15px 30px; border-radius: 14px;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+  .btn-primary {
+    color: #fff; background: linear-gradient(120deg, var(--accent), var(--accent2));
+    box-shadow: 0 8px 28px rgba(124,92,255,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(124,92,255,0.5); }
+  .btn-ghost { color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
+  .btn-ghost:hover { transform: translateY(-3px); border-color: var(--accent2); }
+
+  /* ===== 会社概要（About） ===== */
+  .about-table { width: 100%; border-collapse: collapse; max-width: 760px; }
+  .about-table th, .about-table td {
+    text-align: left; padding: 18px 4px; border-bottom: 1px solid var(--border);
+    font-size: 15px; vertical-align: top;
+  }
+  .about-table th { color: var(--muted); font-weight: 600; width: 180px; white-space: nowrap; }
+  .about-table td { color: var(--text); }
+  .placeholder { color: var(--accent3); font-size: 13px; }
+
+  /* ===== 事業内容・サービス（Services） ===== */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;
+  }
+  .service-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px 28px;
+    backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .service-card:hover {
+    transform: translateY(-6px); border-color: var(--accent);
+    box-shadow: 0 18px 50px rgba(124,92,255,0.25);
+  }
+  .service-card .icon {
+    width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    background: rgba(124,92,255,0.12); border: 1px solid rgba(124,92,255,0.28);
+  }
+  .service-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .service-card p { color: var(--muted); font-size: 14px; }
+
+  /* ===== 代表メッセージ（Message） ===== */
+  .message-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+    padding: 48px;
+    backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+    position: relative; overflow: hidden;
+  }
+  .message-card::before {
+    content: ""; position: absolute; top: 0; left: 10%; width: 80%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent2), transparent); opacity: 0.7;
+  }
+  .message-card p { color: #d7d7e0; font-size: 16px; margin-bottom: 18px; }
+  .message-sign { margin-top: 30px; display: flex; align-items: center; gap: 16px; }
+  .message-sign .avatar {
+    width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+    background: conic-gradient(from 180deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 20px;
+  }
+  .message-sign .who small { display: block; color: var(--muted); font-size: 13px; }
+  .message-sign .who strong { font-size: 17px; font-weight: 700; }
+
+  /* ===== お問い合わせ（Contact） ===== */
+  .contact { text-align: center; }
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 24px;
+    padding: 56px 40px; max-width: 720px; margin: 0 auto;
+    backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+  }
+  .contact-card h2 {
+    font-size: 28px; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.5px;
+  }
+  .contact-card p { color: var(--muted); margin-bottom: 32px; }
+  .contact-methods { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .contact-tel { color: var(--muted); font-size: 14px; margin-top: 24px; }
+  .contact-tel strong { color: var(--text); font-size: 20px; letter-spacing: 0.5px; }
+
+  /* ===== フッター ===== */
+  footer {
+    position: relative; z-index: 1; border-top: 1px solid var(--border);
+    padding: 36px 0; text-align: center; color: var(--muted); font-size: 13px;
+  }
+
+  /* ===== レスポンシブ対応 ===== */
+  @media (max-width: 768px) {
+    section { padding: 72px 0; }
+    .sec-title { font-size: 28px; margin-bottom: 36px; }
+    .hero { padding: 80px 0 70px; }
+    .hero h1 { font-size: 38px; letter-spacing: -1px; }
+    .hero p { font-size: 16px; }
+    .message-card { padding: 32px 24px; }
+    .contact-card { padding: 40px 24px; }
+
+    /* スマホ：ナビをハンバーガー化 */
+    .nav-toggle { display: block; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: rgba(5,5,10,0.96);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+    }
+    .nav-links.open { max-height: 320px; }
+    .nav-links a { padding: 16px 24px; border-top: 1px solid var(--border); }
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 0 18px; }
+    .hero h1 { font-size: 31px; }
+    .about-table th, .about-table td { display: block; width: 100%; padding: 10px 4px; }
+    .about-table th { border-bottom: none; padding-bottom: 2px; }
+    .about-table tr { display: block; padding: 8px 0; }
+    .btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+  <!-- 背景演出 -->
+  <div class="grid-bg"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+
+  <!-- ===== ヘッダー / ナビ ===== -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="logo"><span class="mark">M</span>ジャパンマーベリックス</a>
+      <!-- ハンバーガーボタン（スマホ用） -->
+      <button class="nav-toggle" id="navToggle" aria-label="メニューを開閉">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">会社概要</a>
+        <a href="#services">事業内容</a>
+        <a href="#message">代表メッセージ</a>
+        <a href="#contact">お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== ヒーロー ===== -->
+  <section class="hero" id="hero">
+    <div class="wrap">
+      <div class="badge"><span class="dot"></span>千葉県を拠点に全国へ</div>
+      <h1>課題に、確かな解決を。<br>事業の成長を支えるパートナー。</h1>
+      <p>
+        コンサルティングから電気通信・電気工事、セールスマーケティングまで。
+        ジャパンマーベリックス株式会社は、多角的な事業でお客様の経営課題に向き合い、
+        ともに次の一歩を切り拓きます。
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">お問い合わせ</a>
+        <a href="#services" class="btn btn-ghost">事業内容を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 会社概要（About） ===== -->
+  <section id="about">
+    <div class="wrap">
+      <span class="sec-label">About</span>
+      <h2 class="sec-title">会社概要</h2>
+      <table class="about-table">
+        <tr><th>会社名</th><td>ジャパンマーベリックス株式会社</td></tr>
+        <tr><th>代表者</th><td>代表 生貝 和也</td></tr>
+        <tr><th>所在地</th><td>千葉県 <span class="placeholder">※詳細住所は後日差し替え</span></td></tr>
+        <tr><th>設立</th><td><span class="placeholder">※設立年月は後日差し替え</span></td></tr>
+        <tr><th>資本金</th><td><span class="placeholder">※資本金は後日差し替え</span></td></tr>
+        <tr><th>事業内容</th><td>コンサルティング／電気通信工事業／電気工事業／セールスマーケティング</td></tr>
+        <tr><th>電話番号</th><td>000-0000-0000 <span class="placeholder">※後日差し替え</span></td></tr>
+        <tr><th>メール</th><td>info@example.com <span class="placeholder">※後日差し替え</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== 事業内容・サービス（Services） ===== -->
+  <section id="services">
+    <div class="wrap">
+      <span class="sec-label">Services</span>
+      <h2 class="sec-title">事業内容</h2>
+      <div class="services-grid">
+        <!-- コンサルティング -->
+        <div class="service-card">
+          <div class="icon">📊</div>
+          <h3>コンサルティング</h3>
+          <p>経営・事業の課題を整理し、最適な打ち手をご提案。現場に寄り添いながら、成果につながる改善を伴走支援します。</p>
+        </div>
+        <!-- 電気通信工事業 -->
+        <div class="service-card">
+          <div class="icon">📡</div>
+          <h3>電気通信工事業</h3>
+          <p>通信ネットワークやインフラ設備の設計・施工に対応。安定した通信環境を、確かな技術で構築します。</p>
+        </div>
+        <!-- 電気工事業 -->
+        <div class="service-card">
+          <div class="icon">⚡</div>
+          <h3>電気工事業</h3>
+          <p>電気設備の新設・改修・保守までトータルに対応。安全と品質を最優先に、暮らしと事業の電力を支えます。</p>
+        </div>
+        <!-- セールスマーケティング -->
+        <div class="service-card">
+          <div class="icon">🚀</div>
+          <h3>セールスマーケティング</h3>
+          <p>商品・サービスの価値を市場へ届けるための戦略立案から実行まで。売上拡大と顧客接点づくりを支援します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 代表メッセージ（Message） ===== -->
+  <section id="message">
+    <div class="wrap">
+      <span class="sec-label">Message</span>
+      <h2 class="sec-title">代表メッセージ</h2>
+      <div class="message-card">
+        <p>
+          当社の公式サイトをご覧いただき、誠にありがとうございます。
+        </p>
+        <p>
+          ジャパンマーベリックスは、コンサルティングと工事・マーケティングという多角的な事業を通じて、
+          お客様一人ひとりが抱える経営課題の解決に真正面から取り組んでまいりました。
+          私たちが大切にしているのは、目の前の課題を「自分ごと」として捉え、
+          最後までやり抜く姿勢です。
+        </p>
+        <p>
+          変化の激しい時代だからこそ、確かな技術と誠実な対応で、
+          お客様にとって頼れるパートナーであり続けたい。
+          これからも挑戦を続け、関わるすべての人と共に成長していきます。
+          <span class="placeholder">※本文は仮の想定文です。正式なメッセージに差し替えてください。</span>
+        </p>
+        <div class="message-sign">
+          <div class="avatar">生</div>
+          <div class="who">
+            <small>ジャパンマーベリックス株式会社 代表</small>
+            <strong>生貝 和也</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== お問い合わせ（Contact） ===== -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="contact-card">
+        <h2>お気軽にお問い合わせください</h2>
+        <p>ご相談・お見積もりは無料です。事業に関するご質問など、まずはお気軽にご連絡ください。</p>
+        <div class="contact-methods">
+          <a href="mailto:info@example.com" class="btn btn-primary">メールで問い合わせる</a>
+          <a href="tel:00000000000" class="btn btn-ghost">電話をかける</a>
+        </div>
+        <p class="contact-tel">お電話でのお問い合わせ<br><strong>000-0000-0000</strong>（平日 9:00〜18:00）</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== フッター ===== -->
+  <footer>
+    © 2026 ジャパンマーベリックス株式会社 All Rights Reserved.
+  </footer>
+
+  <script>
+    // マウスに反応して背景の光がわずかに動く演出
+    const glows = document.querySelectorAll('.glow');
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5);
+      const y = (e.clientY / window.innerHeight - 0.5);
+      glows.forEach((g, i) => {
+        const f = (i + 1) * 12;
+        g.style.transform = `translate(${x * f}px, ${y * f}px)`;
+      });
+    });
+
+    // スマホ用ハンバーガーメニューの開閉
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+    });
+    // メニュー内リンクをタップしたら閉じる
+    links.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => links.classList.remove('open'));
+    });
+  </script>
+</body>
+</html>
