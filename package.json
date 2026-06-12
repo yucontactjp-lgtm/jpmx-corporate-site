@@ -1,0 +1,15 @@
+{
+  "name": "japan-mavericks-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ジャパンマーベリックス株式会社 コーポレートサイト（AIチャットボット付き）",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}

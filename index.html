@@ -277,6 +277,64 @@
     .about-table tr { display: block; padding: 8px 0; }
     .btn { width: 100%; text-align: center; }
   }
+
+  /* ===== チャットボット ===== */
+  /* 右下のフローティング開閉ボタン */
+  .chat-toggle {
+    position: fixed; bottom: 24px; right: 24px; z-index: 100;
+    width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+    box-shadow: 0 10px 30px rgba(124,92,255,0.5);
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
+    transition: transform 0.25s;
+  }
+  .chat-toggle:hover { transform: scale(1.08); }
+
+  /* チャットパネル本体 */
+  .chat-panel {
+    position: fixed; bottom: 96px; right: 24px; z-index: 100;
+    width: 360px; max-width: calc(100vw - 36px);
+    height: 520px; max-height: calc(100vh - 130px);
+    background: rgba(12,12,20,0.92); border: 1px solid var(--border); border-radius: 20px;
+    backdrop-filter: blur(24px) saturate(140%); -webkit-backdrop-filter: blur(24px) saturate(140%);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+    display: none; flex-direction: column; overflow: hidden;
+  }
+  .chat-panel.open { display: flex; animation: rise 0.3s ease both; }
+
+  /* ヘッダー */
+  .chat-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .chat-head .mark {
+    width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+    background: conic-gradient(from 140deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+    display: flex; align-items: center; justify-content: center; font-size: 15px; color: #fff;
+  }
+  .chat-head strong { font-size: 15px; }
+  .chat-head small { display: block; color: var(--muted); font-size: 11px; }
+
+  /* メッセージ一覧 */
+  .chat-body { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .chat-msg { max-width: 82%; padding: 11px 14px; border-radius: 14px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+  .chat-msg.bot { align-self: flex-start; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+  .chat-msg.user { align-self: flex-end; background: linear-gradient(120deg, var(--accent), var(--accent2)); color: #fff; }
+
+  /* 入力欄 */
+  .chat-foot { padding: 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+  .chat-foot input {
+    flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px;
+    padding: 11px 14px; color: var(--text); font-size: 14px; outline: none;
+  }
+  .chat-foot input:focus { border-color: var(--accent2); }
+  .chat-foot button {
+    border: none; border-radius: 12px; padding: 0 16px; cursor: pointer; font-weight: 600; color: #fff;
+    background: linear-gradient(120deg, var(--accent), var(--accent2));
+  }
+  .chat-foot button:disabled { opacity: 0.5; cursor: default; }
+
+  @media (max-width: 480px) {
+    .chat-panel { bottom: 88px; right: 18px; height: calc(100vh - 120px); }
+    .chat-toggle { bottom: 18px; right: 18px; }
+  }
 </style>
 </head>
 <body>
@@ -424,6 +482,20 @@
     © 2026 ジャパンマーベリックス株式会社 All Rights Reserved.
   </footer>
 
+  <!-- ===== チャットボット ===== -->
+  <button class="chat-toggle" id="chatToggle" aria-label="チャットを開く">💬</button>
+  <section class="chat-panel" id="chatPanel">
+    <div class="chat-head">
+      <span class="mark">M</span>
+      <div><strong>AIアシスタント</strong><small>ジャパンマーベリックス</small></div>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-foot">
+      <input id="chatInput" type="text" placeholder="ご質問をどうぞ…" autocomplete="off">
+      <button id="chatSend">送信</button>
+    </div>
+  </section>
+
   <script>
     // マウスに反応して背景の光がわずかに動く演出
     const glows = document.querySelectorAll('.glow');
@@ -446,6 +518,88 @@
     links.querySelectorAll('a').forEach((a) => {
       a.addEventListener('click', () => links.classList.remove('open'));
     });
+  </script>
+
+  <script>
+    // ===== チャットボットのUI制御とサーバー通信 =====
+    const chatToggle = document.getElementById('chatToggle');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const chatHistory = []; // APIへ送る会話履歴
+
+    // パネルの開閉
+    chatToggle.addEventListener('click', () => {
+      chatPanel.classList.toggle('open');
+      if (chatPanel.classList.contains('open')) {
+        // 初回オープン時に挨拶を表示
+        if (chatBody.childElementCount === 0) {
+          addChatMsg('bot', 'こんにちは！ジャパンマーベリックス株式会社のAIアシスタントです。事業内容やお問い合わせについて、お気軽にご質問ください。');
+        }
+        chatInput.focus();
+      }
+    });
+
+    // メッセージ要素を追加して返す
+    function addChatMsg(role, text) {
+      const el = document.createElement('div');
+      el.className = 'chat-msg ' + role;
+      el.textContent = text;
+      chatBody.appendChild(el);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      return el;
+    }
+
+    // 送信処理（サーバーからのストリーミング応答を逐次表示）
+    async function sendChat() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      chatInput.value = '';
+      addChatMsg('user', text);
+      chatHistory.push({ role: 'user', content: text });
+      chatInput.disabled = chatSend.disabled = true;
+
+      const botEl = addChatMsg('bot', '');
+      let reply = '';
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: chatHistory }),
+        });
+        if (!res.ok || !res.body) throw new Error('応答エラー');
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        // SSE(Server-Sent Events)形式のストリームを読み取る
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const parts = buffer.split('\n\n');
+          buffer = parts.pop(); // 未完の行は次回へ持ち越し
+          for (const part of parts) {
+            if (!part.startsWith('data: ')) continue;
+            const data = part.slice(6);
+            if (data === '[DONE]') continue;
+            reply += JSON.parse(data);
+            botEl.textContent = reply;
+            chatBody.scrollTop = chatBody.scrollHeight;
+          }
+        }
+        chatHistory.push({ role: 'assistant', content: reply });
+      } catch (e) {
+        botEl.textContent = '申し訳ございません。接続に問題が発生しました。しばらくしてから再度お試しください。';
+      } finally {
+        chatInput.disabled = chatSend.disabled = false;
+        chatInput.focus();
+      }
+    }
+
+    chatSend.addEventListener('click', sendChat);
+    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
   </script>
 </body>
 </html>
