@@ -5,6 +5,7 @@ import express from 'express';
 import Anthropic from '@anthropic-ai/sdk';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SYSTEM_PROMPT } from './system-prompt.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -14,26 +15,6 @@ const client = new Anthropic();
 
 app.use(express.json());
 app.use(express.static(__dirname)); // index.html などを配信
-
-// チャットボットの人格・知識を定義するシステムプロンプト
-const SYSTEM_PROMPT = `あなたはジャパンマーベリックス株式会社の公式サイトに常駐するAIアシスタントです。
-丁寧で親しみやすい日本語で、簡潔に回答してください。
-
-# 会社情報
-- 会社名：ジャパンマーベリックス株式会社
-- 代表者：生貝 和也
-- 所在地：〒290-0051 千葉県市原市君塚5-9-4 セザール五井505
-- 設立：2016年9月
-- 事業内容：コンサルティング、電気通信工事業、電気工事業、セールスマーケティング
-- 電話番号：0436-67-0377
-- メール：k.ikegai@jpmx.co.jp
-- お問い合わせ：上記の電話・メール、またはサイト下部のお問い合わせフォームから受け付けています。いただいた内容には24時間以内に担当者が返信します。
-
-# 回答の方針
-- 上記の会社情報に基づいて回答してください。
-- 分からないことや確証のないことは推測で断言せず、「お問い合わせフォームよりご連絡ください」とご案内してください。
-- 料金や個別の契約内容など詳細な情報は、お問い合わせへ誘導してください。
-- 思考の過程は出力せず、最終的な回答のみを述べてください。`;
 
 // チャットエンドポイント（SSEでストリーミング応答）
 app.post('/api/chat', async (req, res) => {
