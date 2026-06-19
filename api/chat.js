@@ -2,7 +2,6 @@
 // ※ Vercel ではこのファイルが使われます（ローカルの server.js は使われません）
 import Anthropic from '@anthropic-ai/sdk';
 import { SYSTEM_PROMPT } from '../system-prompt.js';
-import { SALON_SYSTEM_PROMPT } from '../system-prompt-salon.js';
 
 // ANTHROPIC_API_KEY は Vercel の環境変数から読み込む（管理画面で設定）
 const client = new Anthropic();
@@ -14,16 +13,13 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { messages, site } = req.body ?? {};
+  const { messages } = req.body ?? {};
 
   // 入力の簡易バリデーション
   if (!Array.isArray(messages) || messages.length === 0) {
     res.status(400).json({ error: 'messages が不正です' });
     return;
   }
-
-  // site の値でサイトごとのシステムプロンプトを切り替える（未指定は不動産サイト＝従来どおり）
-  const systemPrompt = site === 'salon' ? SALON_SYSTEM_PROMPT : SYSTEM_PROMPT;
 
   // 役割と本文のみ通し、直近20件・各2000文字までに制限
   const safeMessages = messages
@@ -40,7 +36,7 @@ export default async function handler(req, res) {
     const stream = client.messages.stream({
       model: 'claude-opus-4-8',
       max_tokens: 1024,
-      system: systemPrompt,
+      system: SYSTEM_PROMPT,
       messages: safeMessages,
     });
 
