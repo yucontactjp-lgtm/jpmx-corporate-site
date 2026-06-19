@@ -6,6 +6,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SYSTEM_PROMPT } from './system-prompt.js';
+import { SALON_SYSTEM_PROMPT } from './system-prompt-salon.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -18,12 +19,15 @@ app.use(express.static(__dirname)); // index.html などを配信
 
 // チャットエンドポイント（SSEでストリーミング応答）
 app.post('/api/chat', async (req, res) => {
-  const { messages } = req.body ?? {};
+  const { messages, site } = req.body ?? {};
 
   // 入力の簡易バリデーション
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: 'messages が不正です' });
   }
+
+  // site の値でサイトごとのシステムプロンプトを切り替える（未指定は不動産サイト＝従来どおり）
+  const systemPrompt = site === 'salon' ? SALON_SYSTEM_PROMPT : SYSTEM_PROMPT;
 
   // 役割と本文のみ通し、直近20件・各2000文字までに制限（過大な入力を防ぐ）
   const safeMessages = messages
@@ -40,7 +44,7 @@ app.post('/api/chat', async (req, res) => {
     const stream = client.messages.stream({
       model: 'claude-opus-4-8',
       max_tokens: 1024,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages: safeMessages,
     });
 

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMINE hair &amp; spa | 渋谷のナチュラルケア特化ヘアサロン</title>
+<meta name="description" content="渋谷駅徒歩6分のヘアサロン LUMINE hair & spa（ルミネ ヘア＆スパ）。髪本来の美しさを引き出すナチュラルケアに特化。カット・カラー・パーマ・ヘッドスパまで、少人数・完全予約制で上質なひとときを。">
+<!-- Google Fonts：見出し用の明朝（Shippori Mincho）と本文用のゴシック（Zen Kaku Gothic New） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="main.js" defer></script>
+</head>
+<body>
+  <!-- ===== ヘッダー / ナビ ===== -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="logo">
+        <span class="logo-mark">L</span>
+        <span class="logo-text">LUMINE<small>hair &amp; spa</small></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="メニューを開閉">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#concept">Concept</a>
+        <a href="#menu">Menu</a>
+        <a href="#stylist">Stylist</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#voice">Voice</a>
+        <a href="#access">Access</a>
+        <a href="#access" class="btn btn-primary">ご予約</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== ヒーロー ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <p class="hero-sub">渋谷 / ナチュラルケア特化サロン</p>
+      <h1 class="hero-title">髪本来の美しさを、<br>引き出す場所。</h1>
+      <p class="hero-lead">少人数・完全予約制。あなたの髪と暮らしに寄り添う、上質なひとときを。</p>
+      <div class="hero-cta">
+        <a href="#access" class="btn btn-primary">ご予約はこちら</a>
+        <a href="#menu" class="btn btn-ghost">メニューを見る</a>
+      </div>
+    </div>
+    <a href="#concept" class="hero-scroll" aria-label="下へスクロール">Scroll</a>
+  </section>
+
+  <!-- ===== コンセプト ===== -->
+  <section id="concept" class="section reveal">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-label">Concept</span>
+        <h2 class="sec-title">髪をいたわる、<br>ナチュラルケアという選択。</h2>
+      </div>
+      <div class="concept-wrap">
+        <div class="concept-photo">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=900&q=80" alt="LUMINE hair & spa の店内" loading="lazy">
+        </div>
+        <div class="concept-text">
+          <p>LUMINE hair &amp; spa は、髪と頭皮へのやさしさを第一に考えるナチュラルケア特化サロンです。ダメージを抑えた薬剤と、丁寧な手技。一人ひとりの髪質・骨格・ライフスタイルに合わせて、本来の美しさを引き出します。</p>
+          <p>落ち着いた空間で、施術中もリラックス。少人数・完全予約制だからこそ叶う、ゆったりとした上質な時間をお過ごしください。</p>
+          <ul class="concept-points">
+            <li><span>01</span>髪と頭皮にやさしいナチュラル薬剤</li>
+            <li><span>02</span>骨格・髪質に合わせたパーソナル提案</li>
+            <li><span>03</span>完全予約制でゆったり寛げる空間</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== メニュー・料金 ===== -->
+  <section id="menu" class="section section-alt reveal">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-label">Menu &amp; Price</span>
+        <h2 class="sec-title">メニュー・料金</h2>
+        <p class="sec-desc">料金はすべて税込です。髪の長さ・状態により変動する場合がございます。</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-card">
+          <h3>Cut</h3>
+          <ul class="price-list">
+            <li><span>カット（シャンプー・ブロー込）</span><em>¥5,500</em></li>
+            <li><span>前髪カット</span><em>¥1,100</em></li>
+            <li><span>キッズカット（小学生以下）</span><em>¥3,300</em></li>
+          </ul>
+        </div>
+        <div class="menu-card">
+          <h3>Color</h3>
+          <ul class="price-list">
+            <li><span>リタッチカラー</span><em>¥6,600</em></li>
+            <li><span>フルカラー</span><em>¥8,800〜</em></li>
+            <li><span>ナチュラルカラー（ハーブ/マニキュア）</span><em>¥9,900〜</em></li>
+          </ul>
+        </div>
+        <div class="menu-card">
+          <h3>Perm</h3>
+          <ul class="price-list">
+            <li><span>パーマ</span><em>¥8,800〜</em></li>
+            <li><span>デジタルパーマ</span><em>¥13,200〜</em></li>
+            <li><span>縮毛矯正</span><em>¥16,500〜</em></li>
+          </ul>
+        </div>
+        <div class="menu-card">
+          <h3>Spa &amp; Treatment</h3>
+          <ul class="price-list">
+            <li><span>トリートメント</span><em>¥3,300〜</em></li>
+            <li><span>炭酸ヘッドスパ</span><em>¥4,400〜</em></li>
+            <li><span>アロマヘッドスパ</span><em>¥5,500〜</em></li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">※表示価格はサンプルです。実際の料金は変更される場合があります。</p>
+    </div>
+  </section>
+
+  <!-- ===== スタイリスト紹介 ===== -->
+  <section id="stylist" class="section reveal">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-label">Stylist</span>
+        <h2 class="sec-title">スタイリスト</h2>
+      </div>
+      <div class="stylist-grid">
+        <figure class="stylist-card">
+          <div class="stylist-photo"><img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=600&q=80" alt="スタイリスト 佐藤 美咲" loading="lazy"></div>
+          <figcaption>
+            <p class="role">Director</p>
+            <h3>佐藤 美咲</h3>
+            <p class="msg">髪質改善とナチュラルカラーが得意。なりたいを一緒に叶えます。</p>
+          </figcaption>
+        </figure>
+        <figure class="stylist-card">
+          <div class="stylist-photo"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="スタイリスト 高橋 健" loading="lazy"></div>
+          <figcaption>
+            <p class="role">Top Stylist</p>
+            <h3>高橋 健</h3>
+            <p class="msg">骨格に似合うショート・メンズスタイルにこだわります。</p>
+          </figcaption>
+        </figure>
+        <figure class="stylist-card">
+          <div class="stylist-photo"><img src="https://images.unsplash.com/photo-1595959183082-7b570b7e08e2?w=600&q=80" alt="スタイリスト 鈴木 葵" loading="lazy"></div>
+          <figcaption>
+            <p class="role">Stylist</p>
+            <h3>鈴木 葵</h3>
+            <p class="msg">トレンドの透明感カラーとパーマが得意です。</p>
+          </figcaption>
+        </figure>
+        <figure class="stylist-card">
+          <div class="stylist-photo"><img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=600&q=80" alt="スパセラピスト 田中 千尋" loading="lazy"></div>
+          <figcaption>
+            <p class="role">Spa Therapist</p>
+            <h3>田中 千尋</h3>
+            <p class="msg">頭皮から整えるヘッドスパで極上のリラックスを。</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ギャラリー ===== -->
+  <section id="gallery" class="section section-alt reveal">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-label">Gallery</span>
+        <h2 class="sec-title">ヘアカタログ</h2>
+      </div>
+      <div class="gallery-grid">
+        <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&q=80" alt="ヘアスタイル：ロングのナチュラルカラー" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=400&q=80" alt="ヘアスタイル：透明感のあるカラー" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=400&q=80" alt="ヘアスタイル：ゆるふわパーマ" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?w=400&q=80" alt="ヘアスタイル：ボブスタイル" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1502323777036-f29e3972d82f?w=400&q=80" alt="ヘアスタイル：アレンジヘア" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1503104834685-7205e8607eb9?w=400&q=80" alt="ヘアスタイル：トリートメントの艶髪" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== お客様の声 ===== -->
+  <section id="voice" class="section reveal">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-label">Voice</span>
+        <h2 class="sec-title">お客様の声</h2>
+      </div>
+      <div class="voice-grid">
+        <div class="voice-card">
+          <div class="stars">★★★★★</div>
+          <p>カラーを繰り返してパサついていた髪が、こちらでナチュラルカラーにしてから手触りが全然違います。担当の方の提案も的確でした。</p>
+          <div class="who"><span class="ava">A</span><div><strong>A様（30代・女性）</strong><small>ナチュラルカラー</small></div></div>
+        </div>
+        <div class="voice-card">
+          <div class="stars">★★★★★</div>
+          <p>ヘッドスパが本当に気持ちよくて、つい眠ってしまいました。仕上がりも軽くなって大満足です。また通います。</p>
+          <div class="who"><span class="ava">M</span><div><strong>M様（40代・女性）</strong><small>カット＋ヘッドスパ</small></div></div>
+        </div>
+        <div class="voice-card">
+          <div class="stars">★★★★★</div>
+          <p>はじめてのメンズパーマで不安でしたが、似合うスタイルを丁寧に提案してくれました。落ち着いた雰囲気で居心地が良いです。</p>
+          <div class="who"><span class="ava">K</span><div><strong>K様（20代・男性）</strong><small>カット＋パーマ</small></div></div>
+        </div>
+      </div>
+      <p class="note" style="text-align:center;">※お客様の声はサンプルです。実際のレビューに差し替えてください。</p>
+    </div>
+  </section>
+
+  <!-- ===== アクセス・予約 ===== -->
+  <section id="access" class="section section-alt reveal">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-label">Access &amp; Reservation</span>
+        <h2 class="sec-title">アクセス・ご予約</h2>
+      </div>
+      <div class="access-wrap">
+        <div class="access-info">
+          <table class="access-table">
+            <tr><th>店名</th><td>LUMINE hair &amp; spa（ルミネ ヘア＆スパ）</td></tr>
+            <tr><th>住所</th><td>〒150-0042 東京都渋谷区宇田川町00-0 LUMINE BLD 2F</td></tr>
+            <tr><th>アクセス</th><td>各線「渋谷駅」より徒歩6分</td></tr>
+            <tr><th>電話</th><td>03-0000-0000</td></tr>
+            <tr><th>営業時間</th><td>平日 10:00〜20:00／土日祝 9:00〜19:00</td></tr>
+            <tr><th>定休日</th><td>毎週火曜日・第3水曜日</td></tr>
+            <tr><th>予約</th><td>完全予約制（下記より承ります）</td></tr>
+          </table>
+          <div class="access-cta">
+            <a href="tel:0300000000" class="btn btn-primary">電話で予約する</a>
+            <a href="mailto:info@lumine-salon.example" class="btn btn-outline">メールで問い合わせ</a>
+          </div>
+          <p class="note">※住所・電話番号はポートフォリオ用のサンプルです。</p>
+        </div>
+        <div class="access-map">
+          <!-- 渋谷駅周辺のサンプル地図（実店舗の住所に差し替え可能） -->
+          <iframe
+            title="LUMINE hair & spa の地図"
+            src="https://www.google.com/maps?q=%E6%B8%8B%E8%B0%B7%E9%A7%85&output=embed"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== フッター ===== -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <a href="#hero" class="logo logo-light">
+          <span class="logo-mark">L</span>
+          <span class="logo-text">LUMINE<small>hair &amp; spa</small></span>
+        </a>
+        <nav class="footer-nav">
+          <a href="#concept">Concept</a>
+          <a href="#menu">Menu</a>
+          <a href="#stylist">Stylist</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#voice">Voice</a>
+          <a href="#access">Access</a>
+        </nav>
+      </div>
+      <div class="footer-copy">© 2026 LUMINE hair &amp; spa（架空サロン・ポートフォリオ作品）</div>
+    </div>
+  </footer>
+
+  <!-- ===== チャットボット ===== -->
+  <button class="chat-toggle" id="chatToggle" aria-label="AIチャットで相談する">
+    <span class="chat-toggle-icon" aria-hidden="true">💬</span>
+    <span class="chat-toggle-label">AIに相談</span>
+  </button>
+  <section class="chat-panel" id="chatPanel">
+    <div class="chat-head">
+      <span class="chat-mark">L</span>
+      <div><strong>ルミネちゃん</strong><small>LUMINE hair &amp; spa</small></div>
+      <button class="chat-close" id="chatClose" aria-label="チャットを閉じる">×</button>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-foot">
+      <input id="chatInput" type="text" placeholder="ヘアやご予約のご質問をどうぞ…" autocomplete="off">
+      <button id="chatSend">送信</button>
+    </div>
+  </section>
+</body>
+</html>

@@ -4,11 +4,16 @@
     { "src": "api/chat.js", "use": "@vercel/node" },
     { "src": "index.html", "use": "@vercel/static" },
     { "src": "styles.css", "use": "@vercel/static" },
-    { "src": "main.js", "use": "@vercel/static" }
+    { "src": "main.js", "use": "@vercel/static" },
+    { "src": "salon/index.html", "use": "@vercel/static" },
+    { "src": "salon/styles.css", "use": "@vercel/static" },
+    { "src": "salon/main.js", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/chat", "dest": "/api/chat.js" },
     { "src": "/", "dest": "/index.html" },
+    { "src": "/salon", "dest": "/salon/index.html" },
+    { "src": "/salon/", "dest": "/salon/index.html" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }

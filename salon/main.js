@@ -1,69 +1,68 @@
-// ===== 全ページ共通スクリプト =====
+// ===== LUMINE hair & spa 共通スクリプト =====
+
+// JSが動作していることを示す印（CSSのスクロール出現演出はこのクラスがある時のみ有効）
+document.documentElement.classList.add('js');
+
+// スクロールでヘッダーに影を付ける
+const nav = document.getElementById('nav');
+if (nav) {
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
 
 // スマホ用ハンバーガーメニューの開閉
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
 if (navToggle && navLinks) {
-  navToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
   // メニュー内リンクをタップしたら閉じる
   navLinks.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => navLinks.classList.remove('open'));
   });
 }
 
-// ===== 実績数値のカウントアップ演出 =====
-// 画面に入ったら 0 から目標値まで数字を増やす
-const counters = document.querySelectorAll('.stat-num span[data-target]');
-if (counters.length && 'IntersectionObserver' in window) {
-  const animateCount = (el) => {
-    const target = Number(el.dataset.target);
-    const duration = 1400;
-    const start = performance.now();
-    const step = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      // 終わりがなめらかになるイージング
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(eased * target).toLocaleString();
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target.toLocaleString();
-    };
-    requestAnimationFrame(step);
-  };
-
-  const observer = new IntersectionObserver((entries, obs) => {
+// ===== スクロールで各セクションをふわっと表示 =====
+const reveals = document.querySelectorAll('.reveal');
+if (reveals.length && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        animateCount(entry.target);
+        entry.target.classList.add('is-visible');
         obs.unobserve(entry.target); // 一度だけ実行
       }
     });
-  }, { threshold: 0.5 });
-
-  counters.forEach((el) => observer.observe(el));
+  }, { threshold: 0.15 });
+  reveals.forEach((el) => io.observe(el));
+} else {
+  // IntersectionObserver 非対応環境では常に表示
+  reveals.forEach((el) => el.classList.add('is-visible'));
 }
 
 // ===== チャットボットのUI制御とサーバー通信 =====
 const chatToggle = document.getElementById('chatToggle');
 const chatPanel = document.getElementById('chatPanel');
+const chatClose = document.getElementById('chatClose');
 const chatBody = document.getElementById('chatBody');
 const chatInput = document.getElementById('chatInput');
 const chatSend = document.getElementById('chatSend');
 const chatHistory = []; // APIへ送る会話履歴
 
 if (chatToggle && chatPanel) {
-  // パネルの開閉
-  chatToggle.addEventListener('click', () => {
-    chatPanel.classList.toggle('open');
-    if (chatPanel.classList.contains('open')) {
-      // 初回オープン時に挨拶を表示
-      if (chatBody.childElementCount === 0) {
-        addChatMsg('bot', 'こんにちは！ジャパンマーベリックス株式会社のAIアシスタントです。不動産の売買・賃貸・管理など、お気軽にご質問ください。');
-      }
-      chatInput.focus();
+  // パネルを開く
+  const openChat = () => {
+    chatPanel.classList.add('open');
+    // 初回オープン時に挨拶を表示
+    if (chatBody.childElementCount === 0) {
+      addChatMsg('bot', 'こんにちは！LUMINE hair & spa のAIアシスタント「ルミネちゃん」です🌿 ヘアメニューやご予約、ヘアケアのご相談など、お気軽にどうぞ。');
     }
+    chatInput.focus();
+  };
+
+  chatToggle.addEventListener('click', () => {
+    chatPanel.classList.contains('open') ? chatPanel.classList.remove('open') : openChat();
   });
+  if (chatClose) chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
 
   chatSend.addEventListener('click', sendChat);
   chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
@@ -94,7 +93,8 @@ async function sendChat() {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chatHistory }),
+      // site:'salon' を付与してサーバー側で美容室用プロンプトに切り替える
+      body: JSON.stringify({ messages: chatHistory, site: 'salon' }),
     });
     if (!res.ok || !res.body) throw new Error('応答エラー');
 
